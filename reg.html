@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration</title>
+    <link rel="stylesheet" type="text/css" href="./styles.css" />
+    <style>
+        body {
+            background-image: url('BG.jpg'); /* Replace 'BG.jpg' with the actual path to your background image */
+            background-size: cover;
+            background-position: center;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            color: white; /* Set text color to ensure readability on the background */
+        }
+
+        .registration-container {
+            padding: 20px;
+            text-align: center;
+        }
+
+        .registration-form {
+            background-color: rgba(255, 255, 255, 0.8); /* Add a semi-transparent white background for better readability */
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+
+        label, input, button {
+            margin-bottom: 15px;
+        }
+
+        /* Add more styles as needed */
+    </style>
+</head>
+<body>
+    <div class="registration-container">
+        <h1>Registration Page</h1>
+        <form class="registration-form" id="registration-form">
+            <label for="newUsername">Username:</label>
+            <input type="text" id="newUsername" name="newUsername" required>
+
+            <label for="newPassword">Password:</label>
+            <input type="password" id="newPassword" name="newPassword" required>
+
+            <label for="confirmPassword">Confirm Password:</label>
+            <input type="password" id="confirmPassword" name="confirmPassword" required>
+
+            <button type="submit">Register</button> <!-- The "Register" button -->
+        </form>
+        <a href="login.html">Already have an account? Login here</a>
+
+        <script>
+            const registrationForm = document.getElementById("registration-form");
+
+            registrationForm.addEventListener("submit", function(event) {
+                event.preventDefault();
+
+                // Get values from the registration form
+                var newUsername = document.getElementById("newUsername").value;
+                var newPassword = document.getElementById("newPassword").value;
+
+                // Save registered data to localStorage
+                const registeredUsers = JSON.parse(localStorage.getItem("registeredUsers")) || [];
+
+                if (!registeredUsers.some(user => user.username === newUsername)) {
+                    registeredUsers.push({ username: newUsername, password: newPassword });
+                    localStorage.setItem("registeredUsers", JSON.stringify(registeredUsers));
+                    alert("Registration successful. Please log in.");
+                    window.location.href = 'login.html';
+                } else {
+                    alert("Username already exists. Please choose a different username.");
+                }
+            });
+        </script>
+    </div>
+</body>
+</html>

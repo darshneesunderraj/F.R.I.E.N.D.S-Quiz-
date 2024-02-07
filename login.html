@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" type="text/css" href="./styles.css" />
+    <style>
+        body {
+            background-image: url('BG.jpg');
+            background-size: cover;
+            background-position: center;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            color: white;
+        }
+
+        .login-container {
+            padding: 20px;
+            text-align: center;
+        }
+
+        .login-form {
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+
+        label, input, button {
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h1>Login Page</h1>
+        <form class="login-form" onsubmit="saveLoginDetails(event)">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required>
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+
+            <button type="submit">Login</button>
+        </form>
+        <a href="reg.html">Don't have an account? Register here</a>
+
+        <script>
+            function saveLoginDetails(event) {
+                event.preventDefault();
+
+                // Get values from the login form
+                var username = document.getElementById("username").value;
+                var password = document.getElementById("password").value;
+
+                // Check if the user is registered
+                const registeredUsers = JSON.parse(localStorage.getItem("registeredUsers")) || [];
+                const user = registeredUsers.find(user => user.username === username && user.password === password);
+
+                if (user) {
+                    // Save login details to localStorage
+                    localStorage.setItem("loggedInUsername", username);
+                    localStorage.setItem("loggedInPassword", password);
+
+                    // Redirect to the quiz page
+                    window.location.href = "index.html";
+                } else {
+                    alert("Invalid username or password. Please try again.");
+                }
+            }
+        </script>
+    </div>
+</body>
+</html>
